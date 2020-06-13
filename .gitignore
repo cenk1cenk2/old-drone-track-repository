@@ -1,6 +1,6 @@
 # Compiled Output
 /node_modules
-/dist
+/dist*
 
 # tests
 /coverage

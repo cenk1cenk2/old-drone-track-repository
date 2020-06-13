@@ -1,5 +1,5 @@
 module.exports = {
-  "extends": ["@cenk1cenk2/eslint-config/typescript"],
+  extends: [ '@cenk1cenk2/eslint-config/typescript' ],
   rules: {
     'import/order': [
       'error',
@@ -7,6 +7,14 @@ module.exports = {
         pathGroups: [
           {
             pattern: '@root/**',
+            group: 'parent'
+          },
+          {
+            pattern: '@utils/**',
+            group: 'parent'
+          },
+          {
+            pattern: '@templates/**',
             group: 'parent'
           }
         ],

@@ -1,12 +1,17 @@
 {
   "name": "drone-track-repository",
-  "version": "1.0.0",
+  "version": "1.0.0-development",
   "description": "Tracking a parent repository and tagging this with the new version if required.",
-  "main": "index.js",
   "repository": "https://github.com/cenk1cenk2/drone-track-repository",
   "author": "Cenk Kılıç <cenk@kilic.dev>",
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
+    "start": "node dist/main",
+    "prebuild": "rimraf dist/ && rimraf tsconfig*.tsbuildinfo",
+    "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.paths.json -s ./dist -o ./dist",
+    "dev:start": "ts-node -r tsconfig-paths/register src/main",
     "lint": "prettier --write src/ && eslint --ext .json,.ts,.js --fix src/"
   },
   "husky": {
@@ -21,13 +26,29 @@
       "eslint --ext .json,.ts,.js --fix"
     ]
   },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "config": "^3.3.1",
+    "js-yaml": "^3.14.0",
+    "listr2": "^2.1.3",
+    "pad": "^3.2.0",
+    "winston": "^3.2.1"
+  },
   "devDependencies": {
     "@cenk1cenk2/eslint-config": "*",
+    "@rollup/plugin-json": "^4.1.0",
+    "@types/config": "^0.0.36",
+    "@types/node": "^14.0.13",
     "commitizen": "*",
     "cz-conventional-changelog": "*",
     "eslint": "*",
     "husky": "*",
-    "lint-staged": "*"
+    "lint-staged": "*",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "tsconfig-paths": "^3.9.0",
+    "tscpaths": "^0.0.9",
+    "typescript": "^3.9.5"
   },
   "config": {
     "commitizen": {

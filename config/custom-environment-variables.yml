@@ -1,0 +1,8 @@
+loglevel: LOG_LEVEL
+
+git-username: GIT_USERNAME
+git-password: GIT_PASSWORD
+
+api-url: API_URL
+this-repo: THIS_REPO
+track-repo: TRACK_REPO

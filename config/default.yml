@@ -1,0 +1,5 @@
+loglevel: module
+
+api-url: https://api.github.com
+this-repo: cenk1cenk2/softether-vpnsrv
+track-repo: SoftEtherVPN/SoftEtherVPN
