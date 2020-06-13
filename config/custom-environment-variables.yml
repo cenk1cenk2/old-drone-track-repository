@@ -1,8 +1,10 @@
-loglevel: LOG_LEVEL
+loglevel: PLUGIN_LOG_LEVEL
 
-git-username: GIT_USERNAME
-git-password: GIT_PASSWORD
+git-username: PLUGIN_GIT_USERNAME
+git-password: PLUGIN_GIT_PASSWORD
 
-api-url: API_URL
-this-repo: THIS_REPO
-track-repo: TRACK_REPO
+api-url: PLUGIN_API_URL
+this-repo: PLUGIN_THIS_REPO
+track-repo: PLUGIN_TRACK_REPO
+
+release-file: PLUGIN_RELEASE_FILE

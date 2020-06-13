@@ -6,3 +6,4 @@
 !dist/**
 !package.json
 !yarn.lock
+!run.sh

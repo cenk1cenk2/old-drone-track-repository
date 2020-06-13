@@ -6,6 +6,17 @@ trigger:
     - master
 
 steps:
+  - name: lint
+    image: node:current-alpine
+    commands:
+      - yarn --frozen-lockfile
+      - yarn lint
+
+  - name: build
+    image: node:current-alpine
+    commands:
+      - yarn build
+
   - name: publish
     image: plugins/docker
     settings:

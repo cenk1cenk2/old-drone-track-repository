@@ -1,6 +1,7 @@
 # Compiled Output
 /node_modules
 /dist*
+.tags
 
 # tests
 /coverage

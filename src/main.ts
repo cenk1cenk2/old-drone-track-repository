@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import config from 'config'
+import { writeFileSync } from 'fs'
 import { Listr, ListrTask } from 'listr2'
 import path from 'path'
 
@@ -15,8 +16,20 @@ class TrackRepo {
   private trackRepo: string
 
   constructor () {
+    // set environment variables
     process.env.SUPPRESS_NO_CONFIG_WARNING = 'true'
     process.env.NODE_CONFIG_DIR = path.join(path.dirname(require.main.filename), '../config')
+
+    // parse flags
+    const debug = process.argv.indexOf('--debug')
+    if (debug !== -1) {
+      process.env.NODE_ENV = 'debug'
+      process.argv.splice(debug, 1)
+    }
+
+    if (process.env.NODE_ENV !== 'debug') {
+      process.chdir('/src/drone')
+    }
 
     this.logger.direct(logo())
     this.run()
@@ -26,13 +39,13 @@ class TrackRepo {
     const repositories: Repositories[] = [
       {
         var: 'this-repo',
-        env: 'THIS_REPO',
+        env: 'PLUGIN_THIS_REPO',
         class: 'thisRepo',
         name: 'parent repository'
       },
       {
         var: 'track-repo',
-        env: 'TRACK_REPO',
+        env: 'PLUGIN_TRACK_REPO',
         class: 'trackRepo',
         name: 'tracked repository'
       }
@@ -42,7 +55,7 @@ class TrackRepo {
     this.initiateAxios()
 
     try {
-      await new Listr<Ctx, 'verbose'>(
+      await new Listr<Ctx>(
         [
           {
             title: 'Plugin error.',
@@ -92,9 +105,21 @@ class TrackRepo {
                 task.title = 'No need to publish a new version.'
               }
             }
+          },
+
+          {
+            title: 'Writing to file.',
+            enabled: (ctx): boolean => !!ctx.newVersion,
+            task: (ctx, task): void => {
+              const tagsFile = config.get<string>('release_file')
+
+              writeFileSync(tagsFile, ctx.newVersion)
+
+              task.title = `Wrote file ${tagsFile}`
+            }
           }
         ],
-        {}
+        { renderer: process.env.NODE_ENV === 'debug' ? 'default' : ('verbose' as 'default') }
       ).run()
     } catch (e) {
       this.logger.debug(e.trace)
