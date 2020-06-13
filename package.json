@@ -44,6 +44,7 @@
     "eslint": "*",
     "husky": "*",
     "lint-staged": "*",
+    "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
