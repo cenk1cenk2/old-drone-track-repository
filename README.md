@@ -2,7 +2,7 @@
 
 [![Build Status](https://drone.kilic.dev/api/badges/cenk1cenk2/drone-track-repository/status.svg)](https://drone.kilic.dev/cenk1cenk2/drone-track-repository) [![Docker Pulls](https://img.shields.io/docker/pulls/cenk1cenk2/drone-track-repository)](https://hub.docker.com/repository/docker/cenk1cenk2/drone-track-repository) [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/cenk1cenk2/drone-track-repository)](https://hub.docker.com/repository/docker/cenk1cenk2/drone-track-repository) [![Docker Image Version (latest by date)](https://img.shields.io/docker/v/cenk1cenk2/drone-track-repository)](https://hub.docker.com/repository/docker/cenk1cenk2/drone-track-repository) [![GitHub last commit](https://img.shields.io/github/last-commit/cenk1cenk2/drone-track-repository)](https://github.com/cenk1cenk2/drone-track-repository)
 
-Drone plugin for making semantic releases based on https://github.com/semantic-release/semantic-release. With some added twists ofc.
+Drone plugin to track other repository and act on it!
 
 <!-- toc -->
 
