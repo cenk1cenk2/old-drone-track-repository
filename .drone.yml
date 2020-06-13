@@ -22,8 +22,8 @@ steps:
     settings:
       repo: cenk1cenk2/drone-track-repository
       username:
-        from_secret: docker_hub_username
+        from_secret: docker_username
       password:
-        from_secret: docker_hub_password
+        from_secret: docker_password
       tag:
         - latest
