@@ -115,7 +115,9 @@ class TrackRepo {
 
               writeFileSync(tagsFile, ctx.newVersion)
 
-              task.title = `Wrote file ${tagsFile}`
+              process.env.RELEASE_TAG = ctx.newVersion
+
+              task.title = `Wrote file "${tagsFile}", expored environment variable "RELEASE_TAG".`
             }
           }
         ],
