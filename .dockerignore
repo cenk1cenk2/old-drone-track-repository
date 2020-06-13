@@ -1,0 +1,8 @@
+# Ignore everything
+**
+
+# Allow
+!config/**
+!dist/**
+!package.json
+!yarn.lock
