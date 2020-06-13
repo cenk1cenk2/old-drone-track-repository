@@ -6,8 +6,7 @@ Drone plugin to track other repository and act on it!
 
 <!-- toc -->
 
-- [Custom Release File](#custom-release-file)
-- [What it does](#what-it-does)
+- [Usage](#usage)
 
 <!-- tocstop -->
 
