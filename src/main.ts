@@ -20,15 +20,15 @@ class TrackRepo {
     // set environment variables
     process.env.NODE_CONFIG_DIR = path.join(path.dirname(require.main.filename), '../config')
 
-    this.logger = new Logger().log
-    this.logger.info(`Configuration directory: ${config.get('this-repo')}`)
-
     // parse flags
     const debug = process.argv.indexOf('--debug')
     if (debug !== -1) {
       process.env.NODE_ENV = 'debug'
+      process.env.PLUGIN_LOGLEVEL = 'debug'
       process.argv.splice(debug, 1)
     }
+
+    this.logger = new Logger().log
 
     if (process.env.NODE_ENV !== 'debug') {
       process.chdir('/drone/src')
@@ -83,6 +83,9 @@ class TrackRepo {
               ctx.newVersion = `${ctx.thisRepoVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${increment ? increment + 1 : '0'}`
 
               task.title = `New release with with ${ctx.newVersion} should be published.`
+            },
+            options: {
+              persistentOutput: true
             }
           },
 
@@ -225,7 +228,7 @@ class TrackRepo {
 
     if (config.has('git-username') && config.has('git-token')) {
       this.logger.debug('Git username and password has been found logging in.')
-      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `Bearer ${config.get('git-token')}` } }
+      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `token ${config.get('git-token')}` } }
     }
   }
 
