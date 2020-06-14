@@ -147,7 +147,7 @@ class TrackRepo {
               await execa.command('git config --global user.name "track-repository"')
               await execa.command('git config --global user.name "$PLUGIN_GIT_USERNAME"')
               await execa.command('git config --global credential.helper store')
-              await execa.command('git config --global credential.helper "!f() { echo \'username=${PLUGIN_GIT_USERNAME}\'; echo \'password=${PLUGIN_GIT_TOKEN}\'; }; f"')
+              await execa.command(`git config --global credential.helper "!f() { echo 'username=${config.get('git-username')}'; echo 'password=${config.get('git-token')}'; }; f"`)
             }
           },
 
