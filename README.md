@@ -6,6 +6,7 @@ Drone plugin to track other repository and act on it!
 
 <!-- toc -->
 
+- [What it does](#what-it-does)
 - [Usage](#usage)
 
 <!-- tocstop -->
