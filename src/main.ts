@@ -165,6 +165,7 @@ class TrackRepo {
             task: async (ctx, task): Promise<void> => {
               const url = `${config.get('api-url')}/repos/${config.get('this-repo')}/releases`
               this.logger.debug(`Will try to post for new release at "${url}".`)
+
               const res = await axios.post(
                 url,
                 {
@@ -182,6 +183,8 @@ class TrackRepo {
                 },
                 this.axiosSettings
               )
+
+              this.logger.debug(res.data)
 
               if (res.status !== 201) {
                 throw new Error('There was a error publishing new release.')
@@ -220,8 +223,8 @@ class TrackRepo {
       }
     }
 
-    if (config.has('git-password')) {
-      this.axiosSettings = { ...this.axiosSettings, headers: { ...this.axiosSettings.headers, authorization: `Bearer ${config.get('git-password')}` } }
+    if (config.has('git-username') && config.has('git-password')) {
+      this.axiosSettings = { ...this.axiosSettings, ...{ auth: { username: config.get('git-username'), password: config.get('git-password') } } }
     }
   }
 
@@ -255,6 +258,8 @@ class TrackRepo {
             this.logger.debug(`Will try to get "${this[value.class]}".`)
 
             const res = await axios.get(this[value.class], this.axiosSettings)
+
+            this.logger.debug(res.data)
 
             ctx[`${value.class}Version`] = res.data?.tag_name
 
