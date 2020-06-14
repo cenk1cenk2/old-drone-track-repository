@@ -50,5 +50,5 @@ steps:
       env_var: # if set it will export to an environment variable
       do_tag: # if set it will do a git tag with the new version
       do_release: # if set it will do a release with the new version
-      log_level: # for debugging purposes
+      loglevel: # for debugging purposes set debug
 ```

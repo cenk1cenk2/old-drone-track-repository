@@ -1,4 +1,4 @@
-loglevel: PLUGIN_LOG_LEVEL
+loglevel: PLUGIN_LOGLEVEL
 
 git-username: PLUGIN_GIT_USERNAME
 git-token: PLUGIN_GIT_TOKEN
