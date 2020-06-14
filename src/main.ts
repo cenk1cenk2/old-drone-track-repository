@@ -11,7 +11,7 @@ import { Logger } from '@utils/logger'
 import { ILogger } from '@utils/logger.interface'
 
 class TrackRepo {
-  private logger: ILogger = new Logger().log
+  private logger: ILogger
   private axiosSettings: AxiosRequestConfig
   private thisRepo: string
   private trackRepo: string
@@ -19,6 +19,9 @@ class TrackRepo {
   constructor () {
     // set environment variables
     process.env.NODE_CONFIG_DIR = path.join(path.dirname(require.main.filename), '../config')
+
+    this.logger = new Logger().log
+    this.logger.debug(`Configuration directory: ${process.env.NODE_CONFIG_DIR}`)
 
     // parse flags
     const debug = process.argv.indexOf('--debug')
