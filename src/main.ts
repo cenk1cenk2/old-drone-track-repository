@@ -18,7 +18,6 @@ class TrackRepo {
 
   constructor () {
     // set environment variables
-    process.env.SUPPRESS_NO_CONFIG_WARNING = 'true'
     process.env.NODE_CONFIG_DIR = path.join(path.dirname(require.main.filename), '../config')
 
     // parse flags
