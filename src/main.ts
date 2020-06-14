@@ -21,7 +21,7 @@ class TrackRepo {
     process.env.NODE_CONFIG_DIR = path.join(path.dirname(require.main.filename), '../config')
 
     this.logger = new Logger().log
-    this.logger.info(`Configuration directory: ${process.env.NODE_CONFIG_DIR}`)
+    this.logger.info(`Configuration directory: ${config.get('this-repo')}`)
 
     // parse flags
     const debug = process.argv.indexOf('--debug')
