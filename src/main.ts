@@ -182,7 +182,7 @@ class TrackRepo {
                 this.axiosSettings
               )
 
-              this.logger.debug(res.data)
+              this.logger.debug(JSON.stringify(res.data))
 
               if (res.status !== 201) {
                 throw new Error('There was a error publishing new release.')
@@ -222,7 +222,7 @@ class TrackRepo {
     }
 
     if (config.has('git-username') && config.has('git-token')) {
-      this.logger.info('Git username and password has been found logging in.')
+      this.logger.debug('Git username and password has been found logging in.')
       this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `Bearer ${config.get('git-token')}` } }
     }
   }
@@ -258,7 +258,7 @@ class TrackRepo {
 
             const res = await axios.get(this[value.class], this.axiosSettings)
 
-            this.logger.debug(res.data)
+            this.logger.debug(JSON.stringify(res.data))
 
             ctx[`${value.class}Version`] = res.data?.tag_name
 
