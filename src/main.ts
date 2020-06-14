@@ -144,10 +144,10 @@ class TrackRepo {
                 throw new Error('GIT username and GIT password must be set to enable this functionality.')
               }
 
-              await execa.command('git config --global user.name "track-repository"')
-              await execa.command('git config --global user.name "$PLUGIN_GIT_USERNAME"')
-              await execa.command('git config --global credential.helper store')
-              await execa.command('git config --global credential.helper "!f() { echo "username=$PLUGIN_GIT_USERNAME"; echo "password=$PLUGIN_GIT_TOKEN"; }; f"')
+              await execa.command('git config --global user.name "track-repository"', { shell: true })
+              await execa.command('git config --global user.name "$PLUGIN_GIT_USERNAME"', { shell: true })
+              await execa.command('git config --global credential.helper store', { shell: true })
+              await execa.command('git config --global credential.helper "!f() { echo "username=$PLUGIN_GIT_USERNAME"; echo "password=$PLUGIN_GIT_TOKEN"; }; f"', { shell: true })
             }
           },
 
@@ -155,7 +155,7 @@ class TrackRepo {
             title: 'Do tag.',
             enabled: (ctx): boolean => !!ctx.newVersion && config.has('do-tag'),
             task: async (ctx, task): Promise<void> => {
-              await execa.command(`git tag ${ctx.newVersion} && git push origin ${ctx.newVersion}`)
+              await execa.command(`git tag ${ctx.newVersion} && git push origin ${ctx.newVersion}`, { shell: true })
 
               task.title = 'Published a new GIT tag.'
             }
