@@ -220,8 +220,8 @@ class TrackRepo {
       }
     }
 
-    if (config.has('git-username') && config.has('git-password')) {
-      this.axiosSettings = { ...this.axiosSettings, ...{ auth: { username: config.get('git-username'), password: config.get('git-password') } } }
+    if (config.has('git-password')) {
+      this.axiosSettings = { ...this.axiosSettings, headers: { ...this.axiosSettings.headers, authorization: `Bearer ${config.get('git-password')}` } }
     }
   }
 
