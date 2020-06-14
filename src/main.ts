@@ -116,8 +116,6 @@ class TrackRepo {
 
               writeFileSync(output, ctx.newVersion)
 
-              process.env.RELEASE_TAG = ctx.newVersion
-
               task.title = `Wrote file "${output}".`
             }
           },
@@ -138,7 +136,7 @@ class TrackRepo {
             title: 'Login to GIT.',
             enabled: (ctx): boolean => !!ctx.newVersion && (config.has('do-tag') || config.has('do-release')),
             task: async (): Promise<void> => {
-              if (!config.has('git-username') || !config.has('git-password')) {
+              if (!config.has('git-username') || !config.has('git-token')) {
                 throw new Error('GIT username and GIT password must be set to enable this functionality.')
               }
 
@@ -223,8 +221,8 @@ class TrackRepo {
       }
     }
 
-    if (config.has('git-username') && config.has('git-password')) {
-      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `token ${config.get('git-password')}` } }
+    if (config.has('git-username') && config.has('git-token')) {
+      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `token ${config.get('git-token')}` } }
     }
   }
 

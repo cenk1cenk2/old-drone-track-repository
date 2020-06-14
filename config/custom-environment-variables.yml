@@ -1,7 +1,7 @@
 loglevel: PLUGIN_LOG_LEVEL
 
 git-username: PLUGIN_GIT_USERNAME
-git-password: PLUGIN_GIT_TOKEN
+git-token: PLUGIN_GIT_TOKEN
 
 api-url: PLUGIN_API_URL
 this-repo: PLUGIN_THIS_REPO
