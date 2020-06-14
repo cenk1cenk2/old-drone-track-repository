@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import config from 'config'
 import execa from 'execa'
 import { writeFileSync } from 'fs'
@@ -12,7 +12,7 @@ import { ILogger } from '@utils/logger.interface'
 
 class TrackRepo {
   private logger: ILogger
-  private axiosSettings: AxiosRequestConfig
+  private axios: AxiosInstance
   private thisRepo: string
   private trackRepo: string
 
@@ -168,23 +168,19 @@ class TrackRepo {
               const url = `${config.get('api-url')}/repos/${config.get('this-repo')}/releases`
               this.logger.debug(`Will try to post for new release at "${url}".`)
 
-              const res = await axios.post(
-                url,
-                {
-                  // eslint-disable-next-line @typescript-eslint/camelcase
-                  tag_name: ctx.newVersion,
-                  // eslint-disable-next-line @typescript-eslint/camelcase
-                  target_commitish: process.env.DRONE_BRANCH,
-                  name: ctx.newVersion,
-                  body:
-                    process.env.DRONE_BUILD_EVENT === 'tag'
-                      ? `Autoupdated repository tracking the parent repository update on "${config.get('track-repo')}".`
-                      : 'Incremental update independent of the parent repository.',
-                  draft: false,
-                  prerelease: false
-                },
-                this.axiosSettings
-              )
+              const res = await this.axios.post(url, {
+                // eslint-disable-next-line @typescript-eslint/camelcase
+                tag_name: ctx.newVersion,
+                // eslint-disable-next-line @typescript-eslint/camelcase
+                target_commitish: process.env.DRONE_BRANCH,
+                name: ctx.newVersion,
+                body:
+                  process.env.DRONE_BUILD_EVENT === 'tag'
+                    ? `Autoupdated repository tracking the parent repository update on "${config.get('track-repo')}".`
+                    : 'Incremental update independent of the parent repository.',
+                draft: false,
+                prerelease: false
+              })
 
               this.logger.debug(JSON.stringify(res.data))
 
@@ -207,20 +203,16 @@ class TrackRepo {
   }
 
   private initiateAxios (): void {
-    this.axiosSettings = {
+    this.axios = axios.create({
       headers: {
         'User-Agent': 'drone-track-repository',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
-        Accept: '*/*'
+        Accept: '*/*',
+        ...config.has('git-username') && config.has('git-token') ? { Authorization: `Bearer ${config.get('git-token')}` } : {}
       }
-    }
-
-    if (config.has('git-username') && config.has('git-token')) {
-      this.logger.debug('Git username and password has been found logging in.')
-      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `Bearer ${config.get('git-token')}` } }
-    }
+    })
   }
 
   private async checkRequiredVariables (repositories: Repositories[]): Promise<void> {
@@ -252,7 +244,7 @@ class TrackRepo {
           task: async (ctx, task): Promise<void> => {
             this.logger.debug(`Will try to get "${this[value.class]}".`)
 
-            const res = await axios.get(this[value.class], this.axiosSettings)
+            const res = await axios.get(this[value.class])
 
             this.logger.debug(JSON.stringify(res.data))
 
