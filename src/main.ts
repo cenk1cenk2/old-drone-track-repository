@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import config from 'config'
 import execa from 'execa'
 import { writeFileSync } from 'fs'
-import { Listr, ListrTask, ListrRendererValue } from 'listr2'
+import { Listr, ListrTask } from 'listr2'
 import path from 'path'
 
 import { Ctx, Repositories } from './main.interface'
@@ -17,9 +17,6 @@ class TrackRepo {
   private trackRepo: string
 
   constructor () {
-    // set environment variables
-    process.env.NODE_CONFIG_DIR = path.join(path.dirname(require.main.filename), '../config')
-
     // parse flags
     const debug = process.argv.indexOf('--debug')
     if (debug !== -1) {
@@ -33,6 +30,10 @@ class TrackRepo {
     if (process.env.NODE_ENV !== 'debug') {
       process.chdir('/drone/src')
     }
+
+    // set environment variables
+    process.env.NODE_CONFIG_DIR = path.join(path.dirname(require.main.filename), '../config')
+    this.logger.debug(`Configuration directory: ${process.env.NODE_CONFIG_DIR}`)
 
     this.logger.direct(logo())
     this.run()
@@ -58,7 +59,7 @@ class TrackRepo {
     this.initiateAxios()
 
     try {
-      await new Listr<Ctx>(
+      await new Listr<Ctx, 'verbose'>(
         [
           {
             title: 'Plugin error.',
@@ -83,9 +84,6 @@ class TrackRepo {
               ctx.newVersion = `${ctx.thisRepoVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${increment ? increment + 1 : '0'}`
 
               task.title = `New release with with ${ctx.newVersion} should be published.`
-            },
-            options: {
-              persistentOutput: true
             }
           },
 
@@ -198,25 +196,13 @@ class TrackRepo {
           }
         ],
         {
-          renderer: this.getRenderer() as 'default'
+          renderer: 'verbose'
         }
       ).run()
     } catch (e) {
       this.logger.debug(e.trace)
       process.exit(1)
     }
-  }
-
-  private getRenderer (): ListrRendererValue {
-    if (process.env.NODE_ENV === 'debug') {
-      return 'verbose'
-    }
-
-    if (config.get('loglevel') === 'debug') {
-      return 'verbose'
-    }
-
-    return 'default'
   }
 
   private initiateAxios (): void {
