@@ -222,13 +222,17 @@ class TrackRepo {
   private initiateAxios (): void {
     this.axiosSettings = {
       headers: {
-        'User-Agent': 'drone-track-repository'
+        'User-Agent': 'drone-track-repository',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        Accept: '*/*'
       }
     }
 
     if (config.has('git-username') && config.has('git-token')) {
       this.logger.debug('Git username and password has been found logging in.')
-      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `token ${config.get('git-token')}` } }
+      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `Bearer ${config.get('git-token')}` } }
     }
   }
 
