@@ -222,7 +222,8 @@ class TrackRepo {
     }
 
     if (config.has('git-username') && config.has('git-token')) {
-      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `token ${config.get('git-token')}` } }
+      this.logger.info('Git username and password has been found logging in.')
+      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `Bearer ${config.get('git-token')}` } }
     }
   }
 
