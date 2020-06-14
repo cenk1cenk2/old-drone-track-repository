@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import config from 'config'
+import execa from 'execa'
 import { writeFileSync } from 'fs'
 import { Listr, ListrTask } from 'listr2'
 import path from 'path'
@@ -109,15 +110,82 @@ class TrackRepo {
 
           {
             title: 'Writing to file.',
-            enabled: (ctx): boolean => !!ctx.newVersion,
+            enabled: (ctx): boolean => !!ctx.newVersion && config.has('release-file'),
             task: (ctx, task): void => {
-              const tagsFile = config.get<string>('release_file')
+              const output = config.get<string>('release-file')
 
-              writeFileSync(tagsFile, ctx.newVersion)
+              writeFileSync(output, ctx.newVersion)
 
               process.env.RELEASE_TAG = ctx.newVersion
 
-              task.title = `Wrote file "${tagsFile}", expored environment variable "RELEASE_TAG".`
+              task.title = `Wrote file "${output}".`
+            }
+          },
+
+          {
+            title: 'Writing to environment variable.',
+            enabled: (ctx): boolean => !!ctx.newVersion && config.has('environment-variable'),
+            task: (ctx, task): void => {
+              const output = config.get<string>('environment-variable')
+
+              process.env[output] = ctx.newVersion
+
+              task.title = `Expored environment variable "${output}".`
+            }
+          },
+
+          {
+            title: 'Login to GIT.',
+            enabled: (ctx): boolean => !!ctx.newVersion && (config.has('do-tag') || config.has('do-release')),
+            task: async (): Promise<void> => {
+              if (!config.has('git-username') || !config.has('git-password')) {
+                throw new Error('GIT username and GIT password must be set to enable this functionality.')
+              }
+
+              await execa.command('git config --global user.name "track-repository"')
+              await execa.command('git config --global user.name "$PLUGIN_GIT_USERNAME"')
+              await execa.command('git config --global credential.helper store')
+              await execa.command('git config --global credential.helper "!f() { echo \'username=${PLUGIN_GIT_USERNAME}\'; echo \'password=${PLUGIN_GIT_PASSWORD}\'; }; f"')
+            }
+          },
+
+          {
+            title: 'Do tag.',
+            enabled: (ctx): boolean => !!ctx.newVersion && config.has('do-tag'),
+            task: async (ctx, task): Promise<void> => {
+              await execa.command(`git tag ${ctx.newVersion} && git push origin ${ctx.newVersion}`)
+
+              task.title = 'Published a new GIT tag.'
+            }
+          },
+
+          {
+            title: 'Do release.',
+            enabled: (ctx): boolean => !!ctx.newVersion && config.has('do-release'),
+            task: async (ctx, task): Promise<void> => {
+              const res = await axios.post(
+                `${config.get('api-url')}/repos/${config.get('this-repo')}/releases`,
+                {
+                  // eslint-disable-next-line @typescript-eslint/camelcase
+                  tag_name: ctx.newVersion,
+                  // eslint-disable-next-line @typescript-eslint/camelcase
+                  target_commitish: process.env.DRONE_BRANCH,
+                  name: ctx.newVersion,
+                  body:
+                    process.env.DRONE_BUILD_EVENT === 'tag'
+                      ? `Autoupdated repository tracking the parent repository update on "${config.get('track-repo')}".`
+                      : 'Incremental update independent of the parent repository.',
+                  draft: false,
+                  prerelease: false
+                },
+                this.axiosSettings
+              )
+
+              if (res.status !== 201) {
+                throw new Error('There was a error publishing new release.')
+              }
+
+              task.title = 'Published a new GIT release.'
             }
           }
         ],

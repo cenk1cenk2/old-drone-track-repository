@@ -8,3 +8,7 @@ this-repo: PLUGIN_THIS_REPO
 track-repo: PLUGIN_TRACK_REPO
 
 release-file: PLUGIN_RELEASE_FILE
+environment-variable: PLUGIN_ENV_VAR
+
+do-tag: PLUGIN_DO_TAG
+do-release: PLUGIN_DO_RELEASE

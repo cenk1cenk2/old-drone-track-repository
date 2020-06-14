@@ -16,6 +16,7 @@ Drone plugin to track other repository and act on it!
   - When a new release is found it triggers to do certain tasks.
   - When a new push has been made to repository it can append the latest tag with `-${number}`.
 - It will then output an environment variable and also write to a file which tag should be the upcoming release.
+- What it can also do is create tag and release for basing your next streps on tags.
 - Rest is up to you. Useful for combining with Docker builds from source, without webhook or downstream setup which in some cases you dont have access to.
 
 ## Usage
@@ -33,7 +34,7 @@ trigger:
     - master
 
 steps:
-  - name: semantic-release
+  - name: track-repository
     image: cenk1cenk2/drone-track-repository
     settings:
       this_repo: cenk1cenk2/drone-track-repository
@@ -44,5 +45,8 @@ steps:
         from_secrets: git_username
       git_password:
         from_secrets: git_password
-      release_file: # it will output to a file in the base of the repo. defaults to .tags
+      release_file: .tags # if it is set it will write to a file in the root of the repository root
+      env_var: # if set it will export to an environment variable
+      do_tag: # if set it will do a git tag with the new version
+      do_release: # if set it will do a release with the new version
 ```
