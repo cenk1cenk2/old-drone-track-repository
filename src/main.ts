@@ -193,7 +193,11 @@ class TrackRepo {
           }
         ],
         {
-          renderer: 'verbose'
+          renderer: 'verbose',
+          rendererOptions: {
+            logEmptyTitle: false,
+            logTitleChange: false
+          }
         }
       ).run()
     } catch (e) {
