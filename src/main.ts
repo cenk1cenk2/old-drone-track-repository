@@ -25,14 +25,15 @@ class TrackRepo {
       process.argv.splice(debug, 1)
     }
 
-    this.logger = new Logger().log
-
     if (process.env.NODE_ENV !== 'debug') {
       process.chdir('/drone/src')
     }
 
     // set environment variables
     process.env.NODE_CONFIG_DIR = path.join(path.dirname(require.main.filename), '../config')
+
+    this.logger = new Logger().log
+
     this.logger.debug(`Configuration directory: ${process.env.NODE_CONFIG_DIR}`)
 
     this.logger.direct(logo())
