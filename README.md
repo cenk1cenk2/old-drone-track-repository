@@ -43,9 +43,9 @@ steps:
       api_url: # some other git compatible api url. defaults to: https://api.github.com
       # GIT USERNAME AND PASSWORD IS NOT REQUIRED. But if you use it you can increase your API hit limit per hour.
       git_username:
-        from_secrets: git_username
+        from_secret: git_username
       git_token:
-        from_secrets: git_token
+        from_secret: git_token
       release_file: .tags # if it is set it will write to a file in the root of the repository root
       env_var: # if set it will export to an environment variable
       do_tag: # if set it will do a git tag with the new version
