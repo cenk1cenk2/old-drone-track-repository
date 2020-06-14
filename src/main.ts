@@ -29,7 +29,7 @@ class TrackRepo {
     }
 
     if (process.env.NODE_ENV !== 'debug') {
-      process.chdir('/src/drone')
+      process.chdir('/drone/src')
     }
 
     this.logger.direct(logo())
