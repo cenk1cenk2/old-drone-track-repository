@@ -82,7 +82,7 @@ class TrackRepo {
 
               const increment: number = parseInt(ctx.thisRepoVersion?.match(new RegExp(/^.*(-[0-9]*)$/))?.[1]?.replace(new RegExp(/^\D+/g), ''), 10)
 
-              ctx.newVersion = `${ctx.thisRepoVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${increment ? increment + 1 : '0'}`
+              ctx.newVersion = `${ctx.thisRepoVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${typeof increment !== 'undefined' ? increment + 1 : '0'}`
 
               task.title = `New release with with ${ctx.newVersion} should be published.`
             }
@@ -113,14 +113,26 @@ class TrackRepo {
           },
 
           {
-            title: 'Writing to file.',
+            title: 'Writing to tracked release file.',
+            enabled: (ctx): boolean => !!ctx.newVersion && config.has('release-tracked'),
+            task: (ctx, task): void => {
+              const output = config.get<string>('release-tracked')
+
+              writeFileSync(output, ctx.trackRepoVersion)
+
+              task.title = `Wrote file for tracking release "${output}".`
+            }
+          },
+
+          {
+            title: 'Writing to release file.',
             enabled: (ctx): boolean => !!ctx.newVersion && config.has('release-file'),
             task: (ctx, task): void => {
               const output = config.get<string>('release-file')
 
               writeFileSync(output, ctx.newVersion)
 
-              task.title = `Wrote file "${output}".`
+              task.title = `Wrote file for next release "${output}".`
             }
           },
 

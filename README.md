@@ -47,6 +47,7 @@ steps:
       git_token:
         from_secret: git_token
       release_file: .tags # if it is set it will write to a file in the root of the repository root
+      release_tracked: .tags-tracked # if it is set it will write to a file what was the latest version of tracked repository was
       env_var: # if set it will export to an environment variable
       do_tag: # if set it will do a git tag with the new version
       do_release: # if set it will do a release with the new version
