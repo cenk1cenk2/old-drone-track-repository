@@ -145,7 +145,7 @@ class TrackRepo {
               await execa.command('git config --global user.name "track-repository"')
               await execa.command('git config --global user.name "$PLUGIN_GIT_USERNAME"')
               await execa.command('git config --global credential.helper store')
-              await execa.command('git config --global credential.helper "!f() { echo \'username=${PLUGIN_GIT_USERNAME}\'; echo \'password=${PLUGIN_GIT_PASSWORD}\'; }; f"')
+              await execa.command('git config --global credential.helper "!f() { echo \'username=${PLUGIN_GIT_USERNAME}\'; echo \'password=${PLUGIN_GIT_TOKEN}\'; }; f"')
             }
           },
 
@@ -224,7 +224,7 @@ class TrackRepo {
     }
 
     if (config.has('git-username') && config.has('git-password')) {
-      this.axiosSettings = { ...this.axiosSettings, ...{ auth: { username: config.get('git-username'), password: config.get('git-password') } } }
+      this.axiosSettings.headers = { ...this.axiosSettings.headers, ...{ Authorization: `token ${config.get('git-password')}` } }
     }
   }
 
