@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 import config from 'config'
 import execa from 'execa'
 import { writeFileSync } from 'fs'
-import { Listr, ListrTask } from 'listr2'
+import { Listr, ListrTask, ListrRendererValue } from 'listr2'
 import path from 'path'
 
 import { Ctx, Repositories } from './main.interface'
@@ -163,8 +163,10 @@ class TrackRepo {
             title: 'Do release.',
             enabled: (ctx): boolean => !!ctx.newVersion && config.has('do-release'),
             task: async (ctx, task): Promise<void> => {
+              const url = `${config.get('api-url')}/repos/${config.get('this-repo')}/releases`
+              this.logger.debug(`Will try to post for new release at "${url}".`)
               const res = await axios.post(
-                `${config.get('api-url')}/repos/${config.get('this-repo')}/releases`,
+                url,
                 {
                   // eslint-disable-next-line @typescript-eslint/camelcase
                   tag_name: ctx.newVersion,
@@ -189,11 +191,26 @@ class TrackRepo {
             }
           }
         ],
-        { renderer: process.env.NODE_ENV === 'debug' ? 'default' : ('verbose' as 'default') }
+        {
+          renderer: this.getRenderer() as 'default'
+        }
       ).run()
     } catch (e) {
       this.logger.debug(e.trace)
+      process.exit(1)
     }
+  }
+
+  private getRenderer (): ListrRendererValue {
+    if (process.env.NODE_ENV === 'debug') {
+      return 'verbose'
+    }
+
+    if (config.get('loglevel') === 'debug') {
+      return 'verbose'
+    }
+
+    return 'default'
   }
 
   private initiateAxios (): void {
@@ -235,12 +252,9 @@ class TrackRepo {
         {
           title: `Getting the latest tag of ${value.name}.`,
           task: async (ctx, task): Promise<void> => {
-            let res
-            try {
-              res = await axios.get(this[value.class], this.axiosSettings)
-            } catch (e) {
-              throw new Error(e)
-            }
+            this.logger.debug(`Will try to get "${this[value.class]}".`)
+
+            const res = await axios.get(this[value.class], this.axiosSettings)
 
             ctx[`${value.class}Version`] = res.data?.tag_name
 
