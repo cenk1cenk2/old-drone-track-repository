@@ -82,7 +82,7 @@ class TrackRepo {
 
               const increment: number = parseInt(ctx.thisRepoVersion?.match(new RegExp(/^.*(-[0-9]*)$/))?.[1]?.replace(new RegExp(/^\D+/g), ''), 10)
 
-              ctx.newVersion = `${ctx.thisRepoVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${typeof increment !== 'undefined' ? increment + 1 : '0'}`
+              ctx.newVersion = `${ctx.thisRepoVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${!isNaN(increment) ? increment + 1 : '0'}`
 
               task.title = `New release with with ${ctx.newVersion} should be published.`
             }
