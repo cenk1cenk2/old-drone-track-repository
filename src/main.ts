@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import axios, { AxiosInstance } from 'axios'
 import config from 'config'
 import execa from 'execa'
@@ -181,9 +182,7 @@ class TrackRepo {
               this.logger.debug(`Will try to post for new release at "${url}".`)
 
               const res = await this.axios.post(url, {
-                // eslint-disable-next-line @typescript-eslint/camelcase
                 tag_name: ctx.newVersion,
-                // eslint-disable-next-line @typescript-eslint/camelcase
                 target_commitish: process.env.DRONE_BRANCH,
                 name: ctx.newVersion,
                 body:

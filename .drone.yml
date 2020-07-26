@@ -6,11 +6,15 @@ trigger:
     - master
 
 steps:
-  - name: lint
+  - name: install
     image: node:current-alpine
     commands:
       - yarn --frozen-lockfile
-      - yarn lint
+
+  - name: lint
+    image: node:current-alpine
+    commands:
+      - yarn lint:check
 
   - name: build
     image: node:current-alpine

@@ -4,20 +4,20 @@ import figures from 'figures'
 import pad from 'pad'
 import { createLogger, format, transports } from 'winston'
 
-import { logLevels } from './logger.constants'
-import { ILoggerFormat, ILogger } from './logger.interface'
+import { LogLevels } from './logger.constants'
+import { LoggerFormat, ILogger } from './logger.interface'
 
 export class Logger {
   static readonly levels = {
-    [logLevels.silent]: 0,
-    [logLevels.direct]: 1,
-    [logLevels.critical]: 1,
-    [logLevels.fail]: 2,
-    [logLevels.warn]: 3,
-    [logLevels.success]: 4,
-    [logLevels.info]: 5,
-    [logLevels.module]: 6,
-    [logLevels.debug]: 7
+    [LogLevels.silent]: 0,
+    [LogLevels.direct]: 1,
+    [LogLevels.critical]: 1,
+    [LogLevels.fail]: 2,
+    [LogLevels.warn]: 3,
+    [LogLevels.success]: 4,
+    [LogLevels.info]: 5,
+    [LogLevels.module]: 6,
+    [LogLevels.debug]: 7
   }
 
   public log: ILogger
@@ -40,7 +40,7 @@ export class Logger {
 
   private initiateLogger (): ILogger {
     const loglevel: string = config.get('loglevel')
-    const logFormat = format.printf(({ level, message, custom }: ILoggerFormat) => {
+    const logFormat = format.printf(({ level, message, custom }: LoggerFormat) => {
       // parse multi line messages
       try {
         let multiLineMessage = message.split('\n')
@@ -69,7 +69,7 @@ export class Logger {
     }) as ILogger
   }
 
-  private logColoring ({ level, message, module, custom }: ILoggerFormat & { module?: string }): string {
+  private logColoring ({ level, message, module, custom }: LoggerFormat & { module?: string }): string {
     let context: string
     let icon: string
 
@@ -87,30 +87,30 @@ export class Logger {
       return input
     }
     switch (level) {
-    case logLevels.critical:
+    case LogLevels.critical:
       coloring = chalk.bgRed.white
       icon = figures.cross
       break
-    case logLevels.fail:
+    case LogLevels.fail:
       coloring = chalk.red
       icon = figures.cross
       break
-    case logLevels.warn:
+    case LogLevels.warn:
       coloring = chalk.yellow
       icon = figures.warning
       break
-    case logLevels.success:
+    case LogLevels.success:
       coloring = chalk.green
       icon = figures.tick
       break
-    case logLevels.info:
+    case LogLevels.info:
       icon = figures.pointer
       break
-    case logLevels.module:
+    case LogLevels.module:
       coloring = chalk.green
       icon = figures.arrowRight
       break
-    case logLevels.debug:
+    case LogLevels.debug:
       coloring = chalk.dim
       icon = figures.play
       break
@@ -119,7 +119,7 @@ export class Logger {
       break
     }
 
-    if (level === logLevels.direct) {
+    if (level === LogLevels.direct) {
       return message
     } else {
       return coloring(`${icon} ${pad(context.toUpperCase(), 10)} | ${message}`)

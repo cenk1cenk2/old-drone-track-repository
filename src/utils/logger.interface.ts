@@ -1,11 +1,11 @@
 import { LeveledLogMethod, Logger as Winston } from 'winston'
 
-import { logLevels } from './logger.constants'
+import { LogLevels } from './logger.constants'
 
-export interface ILoggerFormat {
+export interface LoggerFormat {
   level: string
   message: string
   custom?: string
 }
 
-export type ILogger = Winston & Record<keyof typeof logLevels, LeveledLogMethod>
+export type ILogger = Winston & Record<keyof typeof LogLevels, LeveledLogMethod>
