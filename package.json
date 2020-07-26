@@ -36,12 +36,12 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@cenk1cenk2/cz-cc": "1.0.2",
     "@cenk1cenk2/eslint-config": "*",
     "@rollup/plugin-json": "^4.1.0",
     "@types/config": "^0.0.36",
     "@types/node": "^14.0.13",
     "commitizen": "*",
-    "cz-conventional-changelog": "*",
     "eslint": "*",
     "husky": "*",
     "lint-staged": "*",
@@ -54,7 +54,7 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/@cenk1cenk2/cz-cc"
     }
   }
 }
