@@ -23,19 +23,19 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@cenk1cenk2/cz-cc@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@cenk1cenk2/cz-cc/-/cz-cc-1.0.2.tgz#8ff4fd2f2e248109029888ddfd41ffa98c241af9"
-  integrity sha512-IIDYgBwTNz9AfgUJfePd6hQYYOzZVehBhX8bOAZi9CCxO2E8MJC+00XYiql7ftdKF5zs6rrVOwtXsX+RNxUdZg==
+"@cenk1cenk2/cz-cc@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@cenk1cenk2/cz-cc/-/cz-cc-1.0.3.tgz#41c27cbb1d69b956bd61594e5563963ff93f6894"
+  integrity sha512-MLuSBAK4rakSXgr2ymBXDZhwggARbnfx8czgXWF7I3rjPeHUoDurkXFvAvvOeiatlOYI6nGwj7tyhJgfbSo4NQ==
   dependencies:
     chalk "^4.1.0"
-    commitizen "^4.0.3"
+    commitizen "^4.1.2"
     conventional-commit-types "^3.0.0"
     enquirer "^2.3.6"
-    listr2 "^2.3.3"
-    lodash.map "^4.5.1"
+    listr2 "^2.3.4"
+    lodash.map "^4.6.0"
     longest "^2.0.1"
-    word-wrap "^1.0.3"
+    word-wrap "^1.2.3"
   optionalDependencies:
     "@commitlint/load" "^9.1.1"
 
@@ -1889,7 +1889,7 @@ lint-staged@^10.2.11:
     string-argv "0.3.1"
     stringify-object "^3.3.0"
 
-listr2@^2.1.0, listr2@^2.3.3, listr2@^2.3.4:
+listr2@^2.1.0, listr2@^2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/listr2/-/listr2-2.3.4.tgz#47a8102f880d2f71de7dd7bd5bc22ffaf7dc0e5a"
   integrity sha512-u+qGACXx5NhqtYW4GTv8lDIHJZtkh63EZ8Ulm3xSI0yBb1DhYNoKwLr7CQdIbze68sa/O5fTrL79AV87r0lL5A==
@@ -1928,7 +1928,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash.map@^4.5.1:
+lodash.map@^4.5.1, lodash.map@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
   integrity sha1-dx7Hg540c9nEzeKLGTlMNWL09tM=
