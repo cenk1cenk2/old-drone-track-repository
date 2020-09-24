@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
-    "config": "^3.3.1",
+    "config": "^3.3.2",
     "execa": "^4.0.3",
     "js-yaml": "^3.14.0",
     "listr2": "^3.1.1",
