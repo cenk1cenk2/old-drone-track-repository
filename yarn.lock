@@ -30,10 +30,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@cenk1cenk2/cz-cc@^1.3.11":
-  version "1.3.11"
-  resolved "https://registry.yarnpkg.com/@cenk1cenk2/cz-cc/-/cz-cc-1.3.11.tgz#d23a19df55c6bfa7c02707bc53b77133894a493e"
-  integrity sha512-r4SS56HVPsa1Ew/AZqtUZgjk8257/XA7sflRRlwabLW86j0v9AXog00Qcma+4P/CwU8rYEENYJghZIYz/wxTHw==
+"@cenk1cenk2/cz-cc@^1.3.13":
+  version "1.3.13"
+  resolved "https://registry.yarnpkg.com/@cenk1cenk2/cz-cc/-/cz-cc-1.3.13.tgz#ef722a1b73cd5819992bf574bb5271760f8df7ed"
+  integrity sha512-gDbTDVOQC7bBLwT8cGc4yC+KFPvVFCBFBNBw+DbRnBkA/3ZRsKH16JQGrxxDKYm3oLwgARd3hSiMSHT0f6WioQ==
   dependencies:
     chalk "^4.1.0"
     commitizen "^4.2.3"
@@ -42,7 +42,7 @@
     enquirer-editor "^1.0.0"
     enquirer-prompt-editor "^2.0.1"
     find-git-root "^1.0.4"
-    listr2 "^3.5.0"
+    listr2 "^3.6.1"
     lodash.map "^4.6.0"
     word-wrap "^1.2.3"
   optionalDependencies:
@@ -2116,10 +2116,10 @@ listr2@^3.2.2:
     through "^2.3.8"
     wrap-ansi "^7.0.0"
 
-listr2@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/listr2/-/listr2-3.5.0.tgz#09353bbf76b4f97de0b6abf099db2aa3f0ae1ef2"
-  integrity sha512-97a1ZegjnsGIKfU2PtoE/RFrbYTb7bWb5wzq8ikFOVgOwjCjkJhAaJ+lNQEH25YvrzzKRS+522WkR4OZ9mfhdA==
+listr2@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/listr2/-/listr2-3.6.0.tgz#27f7cdfeeb5d07eca2e32ef360bb5a6222108f4a"
+  integrity sha512-KAD0oFP4GyZIDrcqNv49ZHQZh+qQISJO8GH2n/8SrtxHoH48aF7eDPmMcXJHV+CnSu0juigZ2znEuYqtWX+OfA==
   dependencies:
     chalk "^4.1.0"
     cli-truncate "^2.1.0"
@@ -2131,10 +2131,10 @@ listr2@^3.5.0:
     through "^2.3.8"
     wrap-ansi "^7.0.0"
 
-listr2@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/listr2/-/listr2-3.6.0.tgz#27f7cdfeeb5d07eca2e32ef360bb5a6222108f4a"
-  integrity sha512-KAD0oFP4GyZIDrcqNv49ZHQZh+qQISJO8GH2n/8SrtxHoH48aF7eDPmMcXJHV+CnSu0juigZ2znEuYqtWX+OfA==
+listr2@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/listr2/-/listr2-3.6.1.tgz#2cf1d157c4971cc0c007a04ebefd6f64ae9c0f80"
+  integrity sha512-wm0VleRb2eBrvyqJ6FoOVyj4igdVwBZoVYczhnDWhEgu6V0fxBtWIxd4IxX76oSSAEfRY78qXhQ1yaCvJv4gvw==
   dependencies:
     chalk "^4.1.0"
     cli-truncate "^2.1.0"
