@@ -44,7 +44,7 @@
     "@cenk1cenk2/eslint-config": "^0.4.36",
     "@rollup/plugin-json": "^4.1.0",
     "@types/config": "^0.0.38",
-    "@types/node": "^14.14.41",
+    "@types/node": "^14.14.43",
     "commitizen": "^4.2.3",
     "eslint": "^7.25.0",
     "husky": "^6.0.0",
