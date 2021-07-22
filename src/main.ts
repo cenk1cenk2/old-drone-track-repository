@@ -85,9 +85,15 @@ class TrackRepo {
             task: (ctx, task): void => {
               task.output = `Triggered by ${process.env.DRONE_BUILD_EVENT}.`
 
-              const increment: number = parseInt(ctx.thisRepoVersion?.match(new RegExp(/^.*(-[0-9]*)$/))?.[1]?.replace(new RegExp(/^\D+/g), ''), 10)
+              if (new RegExp(ctx.trackRepoVersion).exec(ctx.thisRepoVersion)) {
+                ctx.newVersion = ctx.trackRepoVersion
+              } else {
+                ctx.newVersion = ctx.thisRepoVersion
+              }
 
-              ctx.newVersion = `${ctx.thisRepoVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${!isNaN(increment) ? increment + 1 : '0'}`
+              const increment: number = parseInt(ctx.newVersion?.match(new RegExp(/^.*(-[0-9]*)$/))?.[1]?.replace(new RegExp(/^\D+/g), ''), 10)
+
+              ctx.newVersion = `${ctx.newVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${!isNaN(increment) ? increment + 1 : '0'}`
 
               task.title = `New release with with ${ctx.newVersion} should be published.`
             }
