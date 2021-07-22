@@ -77,7 +77,11 @@ class TrackRepo {
 
           {
             title: 'A incremental release will be published.',
-            enabled: (): boolean => process.env.DRONE_BUILD_EVENT === 'push' || process.env.DRONE_BUILD_EVENT === 'pull_request' || process.env.DRONE_BUILD_EVENT === 'rollback',
+            enabled: (): boolean =>
+              process.env.DRONE_BUILD_EVENT === 'push' ||
+              process.env.DRONE_BUILD_EVENT === 'pull_request' ||
+              process.env.DRONE_BUILD_EVENT === 'rollback' ||
+              process.env.DRONE_BUILD_EVENT === 'cron',
             task: (ctx, task): void => {
               task.output = `Triggered by ${process.env.DRONE_BUILD_EVENT}.`
 
