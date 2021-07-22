@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { ILogger } from '@cenk1cenk2/boilerplate-oclif/dist/interfaces/logger.interface'
+import { Logger } from '@cenk1cenk2/boilerplate-oclif/dist/lib/extend/logger'
 import axios, { AxiosInstance } from 'axios'
 import config from 'config'
 import execa from 'execa'
@@ -8,8 +10,6 @@ import path from 'path'
 
 import { Ctx, Repositories } from './main.interface'
 import { logo } from '@templates/logo.template'
-import { Logger } from '@utils/logger'
-import { ILogger } from '@utils/logger.interface'
 
 class TrackRepo {
   private logger: ILogger
@@ -72,7 +72,7 @@ class TrackRepo {
           },
 
           {
-            task: (ctx, task): Listr => task.newListr(this.getLatestTags(repositories), { concurrent: true })
+            task: (_, task): Listr => task.newListr(this.getLatestTags(repositories), { concurrent: true })
           },
 
           {
@@ -236,7 +236,7 @@ class TrackRepo {
     await Promise.all(
       repositories.map((variable) => {
         if (!config.has(variable.var)) {
-          this.logger.critical(`Can not find required variable for ${variable.name}. Set it using "${variable.env}" environment variable.`)
+          this.logger.fatal(`Can not find required variable for ${variable.name}. Set it using "${variable.env}" environment variable.`)
           failed = true
         } else {
           this[variable.class] = `${config.get('api-url')}/repos/${config.get(variable.var)}/releases/latest`
@@ -245,7 +245,7 @@ class TrackRepo {
     )
 
     if (failed) {
-      this.logger.critical('Can not proceed further.')
+      this.logger.fatal('Can not proceed further.')
       process.exit(127)
     }
   }
