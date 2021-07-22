@@ -31,7 +31,7 @@
     ]
   },
   "dependencies": {
-    "@cenk1cenk2/boilerplate-oclif": "^1.10.2",
+    "@cenk1cenk2/boilerplate-oclif": "^1.10.3",
     "axios": "^0.21.0",
     "chalk": "^4.1.1",
     "config": "^3.3.6",
