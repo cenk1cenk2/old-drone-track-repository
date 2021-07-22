@@ -77,46 +77,28 @@ class TrackRepo {
 
           {
             title: 'A incremental release will be published.',
-            enabled: (): boolean =>
-              process.env.DRONE_BUILD_EVENT === 'push' ||
-              process.env.DRONE_BUILD_EVENT === 'pull_request' ||
-              process.env.DRONE_BUILD_EVENT === 'rollback' ||
-              process.env.DRONE_BUILD_EVENT === 'cron',
             task: (ctx, task): void => {
               task.output = `Triggered by ${process.env.DRONE_BUILD_EVENT}.`
 
-              if (new RegExp(ctx.trackRepoVersion).exec(ctx.thisRepoVersion)) {
-                ctx.newVersion = ctx.trackRepoVersion
-              } else {
-                ctx.newVersion = ctx.thisRepoVersion
-              }
-
-              const increment: number = parseInt(ctx.newVersion?.match(new RegExp(/^.*(-[0-9]*)$/))?.[1]?.replace(new RegExp(/^\D+/g), ''), 10)
-
-              ctx.newVersion = `${ctx.newVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${!isNaN(increment) ? increment + 1 : '0'}`
-
-              task.title = `New release with with ${ctx.newVersion} should be published.`
-            }
-          },
-
-          {
-            title: 'Checking whether a new release should be published.',
-            enabled: (): boolean => process.env.DRONE_BUILD_EVENT === 'tag',
-            task: (ctx, task): void => {
               // replace the increment part because it is done by this repository
-              ctx.thisRepoVersion = ctx.thisRepoVersion?.replace(new RegExp(/(-[0-9]*)$/), '')
+              const cleanRepoVersion = ctx.thisRepoVersion?.replace(new RegExp(/(-[0-9]*)$/), '')
 
-              // compare versions, can not use semver because some repositories does not apply it
-              if (!(ctx.thisRepoVersion === ctx.trackRepoVersion || `v${ctx.thisRepoVersion}` === ctx.trackRepoVersion || ctx.thisRepoVersion === `v${ctx.trackRepoVersion}`)) {
-                // strip v from the tracked repo
+              if (!(cleanRepoVersion === ctx.trackRepoVersion || `v${cleanRepoVersion}` === ctx.trackRepoVersion || cleanRepoVersion === `v${ctx.trackRepoVersion}`)) {
                 if (this.trackRepo.substring(1) !== 'v') {
                   ctx.newVersion = `v${ctx.trackRepoVersion}`
                 } else {
                   ctx.newVersion = ctx.trackRepoVersion
                 }
+              } else if (process.env.DRONE_BUILD_EVENT === 'push' || process.env.DRONE_BUILD_EVENT === 'pull-request' || process.env.DRONE_BUILD_EVENT === 'rollback') {
+                ctx.newVersion = ctx.thisRepoVersion
+              }
 
-                // if the version is incremented
-                task.title = `A new version with ${ctx.newVersion} should be published.`
+              if (ctx.newVersion) {
+                const increment: number = parseInt(ctx.newVersion?.match(new RegExp(/^.*(-[0-9]*)$/))?.[1]?.replace(new RegExp(/^\D+/g), ''), 10)
+
+                ctx.newVersion = `${ctx.newVersion.replace(new RegExp(/(-[0-9]*)$/), '')}-${!isNaN(increment) ? increment + 1 : '0'}`
+
+                task.title = `New release with with ${ctx.newVersion} should be published.`
               } else {
                 task.title = 'No need to publish a new version.'
               }
