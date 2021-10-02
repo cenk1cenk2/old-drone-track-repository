@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@cenk1cenk2/boilerplate-oclif": "^1.10.5",
-    "axios": "^0.21.4",
+    "axios": "^0.22.0",
     "chalk": "^4.1.2",
     "config": "^3.3.6",
     "execa": "^5.1.1",
