@@ -48,7 +48,7 @@
     "@types/config": "^0.0.40",
     "@types/node": "^16.11.6",
     "commitizen": "^4.2.4",
-    "eslint": "^7.32.0",
+    "eslint": "^8.2.0",
     "husky": "^7.0.4",
     "lint-staged": "^11.2.6",
     "prettier": "^2.4.1",
