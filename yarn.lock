@@ -57,14 +57,15 @@
   optionalDependencies:
     "@commitlint/load" "^12.1.4"
 
-"@cenk1cenk2/eslint-config@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@cenk1cenk2/eslint-config/-/eslint-config-2.4.0.tgz#8ba5e69dbf602728001a819e3430b5e772fe7373"
-  integrity sha512-z/q8D1hHkSDrAq3mPQUnQ0DRoa5jhns5zoM/TweSlnxtJ4GFof4oLP1sp7Rsz09IOfEPsKoFWx7e1+X6THCG1Q==
+"@cenk1cenk2/eslint-config@^2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@cenk1cenk2/eslint-config/-/eslint-config-2.5.4.tgz#fabc6e0d427ad14cb41f8c41c0be90b469ed53e3"
+  integrity sha512-FWkDhLx8VxBMe5OapuTeqyEPyLB0GNJ5+MB+Cznk80NHunOFjZAh4DuFcAjFWhJCG7z+TATIswQdxLygZKFFaQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.9.0"
     "@typescript-eslint/parser" "^5.9.0"
     eslint-plugin-import "^2.25.4"
+    load-tsconfig "^0.2.3"
 
 "@commitlint/config-validator@^16.1.0":
   version "16.1.0"
@@ -2269,6 +2270,11 @@ listr2@^4.0.1:
     rxjs "^7.5.2"
     through "^2.3.8"
     wrap-ansi "^7.0.0"
+
+load-tsconfig@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/load-tsconfig/-/load-tsconfig-0.2.3.tgz#08af3e7744943caab0c75f8af7f1703639c3ef1f"
+  integrity sha512-iyT2MXws+dc2Wi6o3grCFtGXpeMvHmJqS27sMPGtV2eUu4PeFnG+33I8BlFK1t1NWMjOpcx9bridn5yxLDX2gQ==
 
 locate-path@^2.0.0:
   version "2.0.0"
