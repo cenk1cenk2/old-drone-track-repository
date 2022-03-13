@@ -33,7 +33,7 @@
   "dependencies": {
     "@cenk1cenk2/boilerplate-oclif": "^1.10.6",
     "axios": "^0.26.1",
-    "chalk": "^4.1.2",
+    "chalk": "^5.0.1",
     "config": "^3.3.7",
     "execa": "^5.1.1",
     "js-yaml": "^4.1.0",
